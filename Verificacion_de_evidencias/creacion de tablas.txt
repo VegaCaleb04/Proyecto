@@ -1,0 +1,166 @@
+CREATE DATA BASE VERIFICACION_DE_EVIDENCIA
+
+CREATE TABLE Condicion (
+idCondicion int NOT null,
+idCapitulo int NOT null,
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idCondicion),    
+FOREIGN KEY (id_Capitulo) REFERENCES capitulo (idCapitulo)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+CREATE TABLE capitulo (
+idCapitulo int NOT null,
+id_Articulo int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idCapitulo),    
+FOREIGN KEY (FK_idArticulo) REFERENCES Articulo (idArticulo)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+CREATE TABLE Articulo (
+idArticulo int NOT null,
+FK_idNumeral int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idArticulo),    
+FOREIGN KEY (FK_idArticulo) REFERENCES Numeral (idNumeral)
+ON DELETE CASCADE on UPDATE CASCADE,
+FOREIGN KEY (FK_idArticulo) REFERENCES ArchivoEvidencia (idArchivoEvidencia)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+CREATE TABLE Numeral (
+idNumeral int NOT null,
+id_ArchivoEvidencia int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idNumeral),    
+FOREIGN KEY (id_ArchivoEvidencia) REFERENCES ArchivoEvidencia (idArchivoEvidencia)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+CREATE TABLE Evidencia (
+idEvidencia int NOT null,
+id_ArchivoEvidencia int NOT null,   id_TipoEvidencia int NOT null,  
+titulo char(50) NOT null,    
+autor char(50) NOT null,
+fecha date NOT null,
+PRIMARY key (idEvidencia),    
+FOREIGN KEY (id_ArchivoEvidencia) REFERENCES ArchivoEvidencia (idArchivoEvidencia)
+ON DELETE CASCADE on UPDATE CASCADE,
+    FOREIGN KEY (id_TipoEvidencia) REFERENCES TipoEvidencia (idTipoEvidencia)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+CREATE TABLE ArchivoEvidencia (
+idArchivoEvidencia int NOT null,   id_Estudiante int NOT null,  
+id_Asignatura int NOT null, 
+id_profesor int NOT null,     
+nombre char(50) NOT null,    
+ruta char(100) NOT null,
+fecha date NOT null,
+observacion char(50) NOT null,
+PRIMARY key (idArchivoEvidencia),   
+FOREIGN KEY (id_Estudiante) REFERENCES Estudiantes (idEstudiantes)
+ON DELETE CASCADE on UPDATE CASCADE,
+    FOREIGN KEY (id_Asignatura) REFERENCES Asignatura (idAsignatura)
+ON DELETE CASCADE on UPDATE CASCADE,
+    FOREIGN KEY (id_Profesor) REFERENCES Profesor (idProfesor)
+ON DELETE CASCADE on UPDATE CASCADE
+);
+
+
+-------------------------------------------------------------------------------
+CREATE TABLE Condicion (
+idCondicion int NOT null,
+FK_idCapitulo int NOT null,
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idCondicion),
+);
+CREATE TABLE capitulo (
+idCapitulo int NOT null,
+FK_idArticulo int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idCapitulo),    
+);
+CREATE TABLE Articulo (
+idArticulo int NOT null,
+FK_idNumeral int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idArticulo),    
+
+
+);
+CREATE TABLE Numeral (
+idNumeral int NOT null,
+FK_idArchivoEvidencia int NOT null,    
+Nombre char(50) NOT null,    
+observacion char(50) NOT null,
+PRIMARY key (idNumeral),    
+
+);
+CREATE TABLE Evidencia (
+idEvidencia int NOT null,
+FK_idArchivoEvidencia int NOT null,   id_TipoEvidencia int NOT null,  
+titulo char(50) NOT null,    
+autor char(50) NOT null,
+fecha date NOT null,
+PRIMARY key (idEvidencia),    
+
+);
+CREATE TABLE TipoEvidencia (
+idTipoEvidencia int NOT null,
+nombre char(50) NOT null, 
+observacion char(500) NOT null, 
+PRIMARY key (idTipoEvidencia),    
+
+);
+CREATE TABLE ArchivoEvidencia (
+idArchivoEvidencia int NOT null,   id_Estudiante int NOT null,  
+FK_idAsignatura int NOT null, 
+FK_idprofesor int NOT null,     
+nombre char(50) NOT null,    
+ruta char(100) NOT null,
+fecha date NOT null,
+observacion char(50) NOT null,
+PRIMARY key (idArchivoEvidencia),   
+);
+
+ CREATE TABLE  Estudiante (
+  idEstudiante INT NOT NULL,
+  FK_idAsignatura INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  x INT NOT NULL,
+  y INT NOT NULL,
+  PRIMARY KEY (idEstudiante),);
+
+  CREATE TABLE Profesor (
+  idProfesor INT NOT NULL,
+  FK_idAsignatura INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  x INT NOT NULL,
+  y INT NOT NULL,
+  PRIMARY KEY (idProfesor),);
+  
+  CREATE TABLE Asignatura (
+  idAsignatura INT NOT NULL,
+  FK_idSemestre INT NOT NULL,
+  FK_idPrograma INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idAsignatura),);
+
+CREATE TABLE Programa (
+  idPrograma INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idPrograma));
+
+CREATE TABLE FacultaD (
+  idFacultad INT NOT NULL,
+  FK_idPrograma INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idFacultad),
+  FOREIGN KEY(FK_idPrograma) REFERENCES Programa(idPrograma)
+  ON DELETE CASCADE ON UPDATE CASCADE);
